@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/todoFragment">
+
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="com.ardakazanci.sampleandroidmvvmproject2.home.TodoFragment"
+        android:label="todo_fragment"
+        tools:layout="@layout/todo_fragment">
+        <action
+            android:id="@+id/action_todoFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.ardakazanci.sampleandroidmvvmproject2.detail.DetailFragment"
+        android:label="detail_fragment"
+        tools:layout="@layout/detail_fragment" />
+</navigation>

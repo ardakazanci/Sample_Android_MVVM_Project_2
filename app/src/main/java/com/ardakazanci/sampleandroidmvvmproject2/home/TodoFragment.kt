@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 
 import com.ardakazanci.sampleandroidmvvmproject2.R
+import com.ardakazanci.sampleandroidmvvmproject2.databinding.TodoFragmentBinding
 
 class TodoFragment : Fragment() {
 
@@ -21,13 +23,29 @@ class TodoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.todo_fragment, container, false)
+
+
+        val binding = DataBindingUtil.inflate<TodoFragmentBinding>(
+            inflater,
+            R.id.todoFragment,
+            container,
+            false
+        )
+
+
+
+
+
+        return binding.root
+
+
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TodoViewModel::class.java)
-        // TODO: Use the ViewModel
+
     }
 
 }
