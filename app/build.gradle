@@ -57,11 +57,17 @@ dependencies {
 
     def retrofit_version = "2.7.1"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    //implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
 
     def navigation_component = "2.2.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_component"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_component"
+
+    def moshi_version = "1.8.0"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
 
 
