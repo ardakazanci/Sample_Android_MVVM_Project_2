@@ -3,6 +3,7 @@ package com.ardakazanci.sampleandroidmvvmproject2.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ardakazanci.sampleandroidmvvmproject2.data.TodoModel
 import com.ardakazanci.sampleandroidmvvmproject2.data.network.TodoApi
 import com.ardakazanci.sampleandroidmvvmproject2.data.network.TodoApiService
 import retrofit2.Call
@@ -24,13 +25,16 @@ class TodoViewModel : ViewModel() {
 
     private fun getTodoProperties() {
 
-        TodoApi.retrofitService.getTodos().enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
+        TodoApi.retrofitService.getTodos().enqueue(object : Callback<List<TodoModel>> {
+            override fun onFailure(call: Call<List<TodoModel>>, t: Throwable) {
                 _response.value = "Error : " + t.printStackTrace()
             }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                _response.value = "Result : " + response.body()
+            override fun onResponse(
+                call: Call<List<TodoModel>>,
+                response: Response<List<TodoModel>>
+            ) {
+                _response.value = "Result Size : " + response.body()?.size
             }
 
 
