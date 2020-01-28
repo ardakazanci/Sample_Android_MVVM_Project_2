@@ -13,11 +13,10 @@ import com.ardakazanci.sampleandroidmvvmproject2.databinding.DetailFragmentBindi
 
 class DetailFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = DetailFragment()
-    }
 
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel: DetailViewModel by lazy {
+        ViewModelProviders.of(this).get(DetailViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +24,7 @@ class DetailFragment : Fragment() {
     ): View? {
         val binding = DataBindingUtil.inflate<DetailFragmentBinding>(
             inflater,
-            R.id.detailFragment,
+            R.layout.detail_fragment,
             container,
             false
         )
@@ -33,10 +32,6 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
 
-    }
 
 }

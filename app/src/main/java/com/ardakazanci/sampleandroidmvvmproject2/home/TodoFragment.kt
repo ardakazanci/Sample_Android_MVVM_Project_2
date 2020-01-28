@@ -13,11 +13,10 @@ import com.ardakazanci.sampleandroidmvvmproject2.databinding.TodoFragmentBinding
 
 class TodoFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = TodoFragment()
-    }
 
-    private lateinit var viewModel: TodoViewModel
+    private val viewModel: TodoViewModel by lazy {
+        ViewModelProviders.of(this).get(TodoViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +26,14 @@ class TodoFragment : Fragment() {
 
         val binding = DataBindingUtil.inflate<TodoFragmentBinding>(
             inflater,
-            R.id.todoFragment,
+            R.layout.todo_fragment,
             container,
             false
         )
 
+
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
 
 
@@ -41,11 +43,5 @@ class TodoFragment : Fragment() {
 
     }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(TodoViewModel::class.java)
-
-    }
 
 }
