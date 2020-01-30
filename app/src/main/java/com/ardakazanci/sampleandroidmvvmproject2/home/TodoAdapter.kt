@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ardakazanci.sampleandroidmvvmproject2.data.TodoModel
 import com.ardakazanci.sampleandroidmvvmproject2.databinding.ItemListTodoBinding
 
-class TodoAdapter : ListAdapter<TodoModel, TodoAdapter.TodoViewHolder>(DiffCallback) {
+class TodoAdapter(private val onClickListener: OnClickListener) : ListAdapter<TodoModel, TodoAdapter.TodoViewHolder>(DiffCallback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoAdapter.TodoViewHolder {
@@ -17,6 +17,9 @@ class TodoAdapter : ListAdapter<TodoModel, TodoAdapter.TodoViewHolder>(DiffCallb
 
     override fun onBindViewHolder(holder: TodoAdapter.TodoViewHolder, position: Int) {
         val todoProperty = getItem(position)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(todoProperty)
+        }
         holder.bind(todoProperty)
     }
 
@@ -41,6 +44,10 @@ class TodoAdapter : ListAdapter<TodoModel, TodoAdapter.TodoViewHolder>(DiffCallb
             return oldItem._id == newItem._id
         }
 
+    }
+
+    class OnClickListener(val clickListener: (todoProperty: TodoModel) -> Unit) {
+        fun onClick(todoProperty: TodoModel) = clickListener(todoProperty)
     }
 
 

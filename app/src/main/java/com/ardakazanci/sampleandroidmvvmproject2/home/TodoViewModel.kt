@@ -27,6 +27,12 @@ enum class TodoApiStatus {
 class TodoViewModel : ViewModel() {
 
 
+    private val _navigateToSelectedProperty = MutableLiveData<TodoModel>()
+    val navigateToSelectedProperty: LiveData<TodoModel>
+        get() = _navigateToSelectedProperty
+
+
+
     private val _status = MutableLiveData<TodoApiStatus>()
     val status: LiveData<TodoApiStatus>
         get() = _status
@@ -94,6 +100,14 @@ class TodoViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun displayPropertyDetails(todoProperty: TodoModel) {
+        _navigateToSelectedProperty.value = todoProperty
+    }
+
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
     }
 
 }

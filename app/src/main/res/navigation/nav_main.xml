@@ -18,5 +18,9 @@
         android:id="@+id/detailFragment"
         android:name="com.ardakazanci.sampleandroidmvvmproject2.detail.DetailFragment"
         android:label="detail_fragment"
-        tools:layout="@layout/detail_fragment" />
+        tools:layout="@layout/detail_fragment" >
+        <argument
+            android:name="selectedTodoProperty"
+            app:argType="com.ardakazanci.sampleandroidmvvmproject2.data.TodoModel" />
+    </fragment>
 </navigation>

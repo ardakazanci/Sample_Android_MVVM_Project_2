@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 
 import com.ardakazanci.sampleandroidmvvmproject2.R
 import com.ardakazanci.sampleandroidmvvmproject2.databinding.DetailFragmentBinding
@@ -22,12 +23,25 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val application = requireNotNull(activity).application
+
+
         val binding = DataBindingUtil.inflate<DetailFragmentBinding>(
             inflater,
             R.layout.detail_fragment,
             container,
             false
         )
+
+        val todoPropery = DetailFragmentArgs.fromBundle(arguments!!).selectedTodoProperty
+
+        // ViewModelFactory created
+        val viewModelFactory = DetailViewModelFactory(todoPropery, application)
+
+        //ViewModel created and Binding Connected
+        binding.viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(DetailViewModel::class.java)
 
         return binding.root
     }
