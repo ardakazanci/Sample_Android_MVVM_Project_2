@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ardakazanci.sampleandroidmvvmproject2.data.TodoModel
 import com.ardakazanci.sampleandroidmvvmproject2.data.network.TodoApi
+import com.ardakazanci.sampleandroidmvvmproject2.data.network.TodoApiFilter
 import com.ardakazanci.sampleandroidmvvmproject2.data.network.TodoApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,18 +50,20 @@ class TodoViewModel : ViewModel() {
 
     init {
 
-        getTodoProperties()
+        getTodoProperties(TodoApiFilter.SHOW_ALL)
 
     }
 
 
-    private fun getTodoProperties() {
+    private fun getTodoProperties(filter: TodoApiFilter) {
 
 
         coroutineScope.launch {
             _status.value = TodoApiStatus.LOADING
-            val getTodosDeferred =
-                TodoApi.retrofitService.getTodos()
+            var getTodosDeferred = TodoApi.retrofitService.getTodos()
+            if (filter != TodoApiFilter.SHOW_ALL) {
+                getTodosDeferred = TodoApi.retrofitService.getTodosFilter(filter.value)
+            }
             try {
                 /**
                  * Deferred nesnesindeki await () yönteminin çağrılması, değer hazır olduğunda ağ çağrısının sonucunu döndürür.
@@ -81,6 +84,11 @@ class TodoViewModel : ViewModel() {
         }
 
 
+    }
+
+    // Eğer filter tetiklendiyse.
+    fun updateListFilter(filter: TodoApiFilter) {
+        getTodoProperties(filter)
     }
 
     override fun onCleared() {

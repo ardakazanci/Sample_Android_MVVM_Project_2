@@ -8,4 +8,9 @@ data class TodoModel(
     val _id: Long,
     val title: String,
     val completed: Boolean
-)
+) {
+
+    val isCompleted
+        get() = completed
+
+}

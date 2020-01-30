@@ -4,6 +4,17 @@ import com.ardakazanci.sampleandroidmvvmproject2.data.TodoModel
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
+
+
+enum class TodoApiFilter(val value: String) {
+
+    SHOW_COMPLETED("true"),
+    SHOW_NOT_COMPLETED("false"),
+    SHOW_ALL("all")
+
+}
+
 
 interface TodoApiService {
 
@@ -14,5 +25,8 @@ interface TodoApiService {
      */
     @GET("todos")
     fun getTodos(): Deferred<List<TodoModel>>
+
+    @GET("todos")
+    fun getTodosFilter(@Query("completed") isCompleted: String): Deferred<List<TodoModel>>
 
 }
