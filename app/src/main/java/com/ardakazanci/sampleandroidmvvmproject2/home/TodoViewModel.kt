@@ -1,5 +1,6 @@
 package com.ardakazanci.sampleandroidmvvmproject2.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,12 +15,24 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
+enum class TodoApiStatus {
+    LOADING,
+    ERROR,
+    DONE
+}
+
+
 class TodoViewModel : ViewModel() {
 
 
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String>
-        get() = _response
+    private val _status = MutableLiveData<TodoApiStatus>()
+    val status: LiveData<TodoApiStatus>
+        get() = _status
+
+    private val _todos = MutableLiveData<List<TodoModel>>()
+    val todo: LiveData<List<TodoModel>>
+        get() = _todos
 
     // Coroutines initialize
     private val viewModelJob = Job()
@@ -45,6 +58,7 @@ class TodoViewModel : ViewModel() {
 
 
         coroutineScope.launch {
+            _status.value = TodoApiStatus.LOADING
             val getTodosDeferred =
                 TodoApi.retrofitService.getTodos()
             try {
@@ -54,11 +68,15 @@ class TodoViewModel : ViewModel() {
                  * bu önemlidir, çünkü UI iş parçacığının kapsamındayız.
                  * Görev tamamlandığında, kodunuz kaldığı yerden çalışmaya devam eder. Await yöntemi veriyi beklerken MainThread serbesttir.
                  */
+                _status.value = TodoApiStatus.LOADING
                 val listTodos = getTodosDeferred.await()
-                _response.value =
-                    "Success: ${listTodos.size} Mars properties retrieved"
+                _status.value = TodoApiStatus.DONE
+                _todos.value = listTodos
             } catch (e: Exception) {
-                _response.value = "Failure: ${e.message}"
+
+                _todos.value = ArrayList()
+                _status.value = TodoApiStatus.ERROR
+
             }
         }
 

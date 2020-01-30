@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
 
 import com.ardakazanci.sampleandroidmvvmproject2.R
 import com.ardakazanci.sampleandroidmvvmproject2.databinding.TodoFragmentBinding
@@ -34,7 +35,10 @@ class TodoFragment : Fragment() {
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
+        binding.todoItem.addItemDecoration(
+            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        )
+        binding.todoItem.adapter = TodoAdapter()
 
 
 
